@@ -1,0 +1,42 @@
+4. Unnamed PL/SQLcode block: Use of Control structure and Exception handling is mandatory.
+Suggested Problem statement:
+Consider Tables:
+1. Borrower (Roll_no, Name, Date_of_Issue, Name_of_Book, Status)
+2. Fine (Roll_no, Date, Amt)
+Accept Roll_no and Name_of_Book from user.
+Check the number of days (from Date_of_Issue).
+If days are between 15 to 30 then fine amount will be Rs 5per day.
+If no. of days>30, per day fine will be Rs 50 per day and for days less than 30, Rs. 5 per day.
+After submitting the book, status will change from I to R.
+If condition of fine is true, then details will be stored into fine table.
+Also handles the exception by named exception handler or user define exception handler.
+
+BEGIN
+  EXECUTE IMMEDIATE 'DROP TABLE student PURGE';
+EXCEPTION
+  WHEN OTHERS THEN
+    IF SQLCODE != -942 THEN RAISE; END IF; -- ignore "table does not exist"
+END;
+
+-- run
+CREATE TABLE student (
+  roll_no NUMBER PRIMARY KEY,
+  name    VARCHAR2(50),
+  marks   NUMBER
+);
+-- run
+DECLARE
+  v_msg VARCHAR2(200);
+BEGIN
+  INSERT INTO student (roll_no, name, marks) VALUES (1, 'Ravi', 85);
+  INSERT INTO student (roll_no, name, marks) VALUES (2, 'Neha', 92);
+
+  DBMS_OUTPUT.PUT_LINE('Both records inserted successfully.');
+EXCEPTION
+  WHEN OTHERS THEN
+    v_msg := 'Failed: ' || SQLCODE || ' - ' || SQLERRM;
+    DBMS_OUTPUT.PUT_LINE(v_msg);
+END;
+
+-- run
+SELECT * FROM student ORDER BY roll_no;
