@@ -1,0 +1,15 @@
+Database Connectivity:
+Write a program to implement MySQL/Oracle database connectivity with any
+front end language to implement Database navigation operations (add, delete, edit
+etc.)
+>>>import mysql.connector
+>>>mydb = mysql.connector.connect(
+host = "localhost",
+user = "root",
+password = "root",
+database = "ecommerce")
+>>>mycursor = mydb.cursor()
+>>>mycursor.execute("SELECT * FROM CUSTOMERS")
+>>>result = mycursor.fetchall()
+>>>for i in result:
+	print(i)
