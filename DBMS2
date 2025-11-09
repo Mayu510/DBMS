@@ -1,0 +1,57 @@
+2. SQL Queries all types of Join, Sub-Query and View: Write at least10 SQL queries for suitable database application using SQL DML statements. Note: Instructor will design the queries which demonstrate the use of concepts like all types of Join ,Sub-Query and View
+
+CREATE DATABASE PRACTICE ;
+USE PRACTICE ;
+
+CREATE TABLE EMPLOYEE (
+	ID INT PRIMARY KEY,
+    NAME VARCHAR(25)
+    );
+    
+INSERT INTO EMPLOYEE (ID , NAME)
+VALUES (1 , "MAYU"),
+	(2 , "GANU"),
+    (3 , "SHRADDHA"),
+    (4 , "DARSHAN");
+    
+
+CREATE TABLE DETAILS(
+	EMP_ID INT PRIMARY KEY,
+    EMP_CITY VARCHAR(50) ,
+    EMP_SALARY INT 
+    );
+
+INSERT INTO DETAILS 
+VALUES (1, "DOMBIVLI" , 300000),
+	(2 ,"PUNE" , 280000),
+    (3 ,"THANE", 25000),
+    (5 ,"VIRAR" , 22000);
+    
+SELECT e.ID , e.name , d.EMP_CITY , d.EMP_salary
+FROM EMPLOYEE as e
+LEFT JOIN DETAILS AS d
+on e.id = d.EMP_ID;
+
+SELECT e.ID , e.name , d.EMP_CITY , d.EMP_salary
+FROM EMPLOYEE as e
+RIGHT JOIN DETAILS AS d
+on e.id = d.EMP_ID;
+
+SELECT e.ID , e.name , d.EMP_CITY , d.EMP_salary
+FROM EMPLOYEE as e
+INNER JOIN DETAILS AS d
+on e.id = d.EMP_ID;
+
+-- VIEW
+
+CREATE VIEW AUDIT AS
+SELECT * FROM DETAILS 
+WHERE EMP_SALARY < 50000;
+
+SELECT * FROM AUDIT ;
+
+-- SUB QUERIES
+
+SELECT * 
+FROM DETAILS 
+WHERE EMP_SALARY >(SELECT EMP_SALARY> 50000);
