@@ -1,0 +1,36 @@
+Cursors: (All types: Implicit, Explicit, Cursor FOR Loop, Parameterized Cursor)
+Write a PL/SQL block of code using parameterized Cursor that will merge the data
+available in the newly created table N_Roll_Call with the data available in the table O_Roll_Call. If the data in the first table already exists in the second table
+then that data should be skipped.
+
+CREATE TABLE o_rollcall (
+  roll_no NUMBER,
+  name    VARCHAR2(25),
+  div     VARCHAR2(5)
+);
+
+CREATE TABLE n_rollcall (
+  roll_no NUMBER,
+  name    VARCHAR2(25),
+  div     VARCHAR2(5)
+);
+
+INSERT ALL
+  INTO o_rollcall VALUES (1, 'Ravi', 'A')
+  INTO o_rollcall VALUES (1, 'Ravi', 'A')
+  INTO o_rollcall VALUES (2, 'Neha', 'A')
+  INTO o_rollcall VALUES (3, 'Amit', 'B')
+  INTO o_rollcall VALUES (3, 'Amit', 'B')
+SELECT * FROM dual;
+
+BEGIN
+  DELETE FROM n_rollcall;
+
+  INSERT INTO n_rollcall (roll_no, name, div)
+  SELECT DISTINCT roll_no, name, div
+  FROM o_rollcall;
+
+  DBMS_OUTPUT.PUT_LINE('Implicit → rows inserted: '||SQL%ROWCOUNT);
+END;
+
+SELECT * FROM n_rollcall ORDER BY roll_no, name, div;
